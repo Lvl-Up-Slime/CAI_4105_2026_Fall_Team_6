@@ -1,26 +1,24 @@
 {
-  description = "Jupiter Lab dev environment";
+  description = "Container-based Jupyter environment";
 
-  inputs.nixpkgs.url = "github:NixOS/nixpkgs";
+  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
-  outputs = { self, nixpkgs }: {
-    devShells.x86_64-linux.default = let
-      pkgs = nixpkgs.legacyPackages.x86_64-linux;
-    in
-    pkgs.mkShell {
-      buildInputs = with pkgs; [
-        pyright
-        nil
-        nixd
-        fish
-        (pkgs.python3.withPackages (python-pkgs: [
-            python-pkgs.pandas
-            python-pkgs.requests
-            python-pkgs.numpy
-            python-pkgs.jupyterlab
+  outputs = { nixpkgs, ... }:
+    let
+      system = "x86_64-linux";
+      pkgs = import nixpkgs { inherit system; };
+    in {
+      devShells.${system}.default = pkgs.mkShell {
+        packages = [ pkgs.podman ];
 
-        ]))
-      ];
+        shellHook = ''
+          if podman build -t ml-jupyter .; then
+            podman run --rm -it \
+              -p 127.0.0.1:8888:8888 \
+              -v "$PWD":/app \
+              ml-jupyter
+          fi
+        '';
+      };
     };
-  };
 }
