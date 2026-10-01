@@ -1,0 +1,16 @@
+{
+  "name": "ML Jupyter",
+
+  "build":{
+    "dockerfile": "Dockerfile",
+  }, 
+
+  "customizations": {
+    "zed": {
+      "extensions": []
+    }
+    "vs-code": {
+      "extensions": []
+    }
+  }
+}
