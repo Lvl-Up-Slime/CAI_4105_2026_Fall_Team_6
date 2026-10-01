@@ -1,5 +1,5 @@
 *.nix
-*flake
+flake*
 
 .ipynb_checkpoints/
 
