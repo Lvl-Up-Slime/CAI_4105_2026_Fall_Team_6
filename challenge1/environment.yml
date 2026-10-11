@@ -1,0 +1,12 @@
+name: cai4105
+channels:
+  - conda-forge
+dependencies:
+  - python=3.12
+  - jupyterlab
+  - ipykernel
+  - matplotlib
+  - numpy
+  - pandas
+  - scikit-learn
+  - xgboost
