@@ -1,4 +1,4 @@
-name: cai4105
+name: CAI_4105
 channels:
   - conda-forge
 dependencies:
