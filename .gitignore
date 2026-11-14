@@ -7,3 +7,8 @@ __pycache__/
 .pytest_cache/
 build/
 dist/
+
+# Scikit-learn & Joblib pipeline cache
+*cache*
+joblib/
+.sklearn_cache/
