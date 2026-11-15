@@ -22,21 +22,27 @@ purchase (`Revenue=True`).
 
 ## Model comparison
 
-| Model | Mean training F1 | Mean CV F1 |
-|---|---:|---:|
-| Logistic Regression | 0.674 | 0.662 |
-| K-Nearest Neighbors | 0.729 | 0.633 |
-| Naïve Bayes | 0.563 | 0.558 |
-| Linear Support Vector Machine | 0.681 | 0.680 |
-| RBF Support Vector Machine | 0.712| 0.672 |
-| Decision Tree | ??? | ??? |
-| Random Forest | ??? | ??? |
-| Gradient Boosting | ??? | ??? |
+| Model	| Mean training F1 | Mean CV F1 | Holdout Validation F1 |
+|---|---:|---:|----:|
+| Logistic Regression | 0.694 |	0.693 | 0.646 |
+| Naïve Bayes | 0.648 | 0.650 | 0.611 |
+| K-Nearest Neighbors | 1.000 | 0.688 | 0.629 |
+| Support Vector Machine | 0.777 | 0.704 | 0.652 |
+| Decision Tree	| 0.716	| 0.695	| 0.644 |
+| Random Forest	| 0.754	| 0.710	| 0.660 |
+| Gradient Boost | 0.777 | 0.705 | 0.668 |
 
-We used `Grid Search` to tune (list of models)...
+- We used `GridSearchCV()` to tune all the individual models which showed a marginal
+increase without regression for all of our models. 
+
 
 ## Final Result
-We selected the **K-Nearest Neighbors** because it lead to a cv results of **0.633**.
+
+We selected the **Gradient Boost** because it lead to a F1 score results of **0.668** when using holdout to validate. Gradient boosting had superior performace as is representative of most tree-based models. Therefore
+it is no surprise that **Random Forest** scored very similarly to Gradients boost and could be interchangeable.
+**Support Vector Machine** deserves acknoledgement given that our metrics showed a mean training F1 score of 
+**0.777**, This showed promising performance compared to all other models at training but with holdout validation scores it proved to be inconsistent. Particulat discoveries worth highlight is our **K-Nearest Neighbors** model actually had a perfect score in training but had a significant drop at holdout **0.629**. This is probably expected behavior with KNN since the model predicted rows are available as neighbors at distance zero. The validation steps shows a more accurate representation of the models performance. 
+
 
 We refit the selected pipeline model and generate the final predictions for the test CSV. 
 The submission records each predictions as a `Revenue` value of `True` or `False`.
